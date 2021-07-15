@@ -1,0 +1,25 @@
+body {
+  background-color: #000;
+  background-image: url("star.png");
+  color: #FFF;
+  margin: 50px;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.title h1 {
+  color: yellow;
+  font-size: 50px;
+  margin: 25px 0;
+  text-decoration: underline;
+}
+
+.title h2 {
+  color: red;
+  font-size: 35px;
+}
+
