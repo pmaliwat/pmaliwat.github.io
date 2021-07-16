@@ -3,12 +3,12 @@ body {
   background-image: url("star.png");
   color: #FFF;
   margin: 50px;
+  text-align: center;
 }
 
 .title {
   display: flex;
   flex-direction: column;
-  text-align: center;
 }
 
 .title h1 {
@@ -21,5 +21,10 @@ body {
 .title h2 {
   color: red;
   font-size: 35px;
+}
+
+.visits .count {
+  color: lightblue;
+  font-size: 30px;
 }
 
