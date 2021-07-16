@@ -2,13 +2,13 @@ body {
   background-color: #000;
   background-image: url("star.png");
   color: #FFF;
-  margin: 50px;
   text-align: center;
 }
 
 .title {
   display: flex;
   flex-direction: column;
+  padding: 10px 0;
 }
 
 .title h1 {
@@ -23,8 +23,37 @@ body {
   font-size: 35px;
 }
 
-.visits .count {
-  color: lightblue;
-  font-size: 30px;
+.visits {
+  padding: 10px 0;
 }
 
+.visits .count {
+  color: lightblue;
+  font-family: "Courier New";
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  margin: 25px 0;
+}
+
+table.contents {
+  border-collapse: separate;
+  border-style: outset;
+  border-spacing: 5px;
+  border-width: 15px;
+  width: 75%;
+}
+
+table.contents td {
+  border: 1px solid darkgrey;
+  border-style: inset;
+  padding: 5px;
+}
+
+.last-updated {
+  color: lightblue;
+}
