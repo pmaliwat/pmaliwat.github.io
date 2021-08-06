@@ -8,36 +8,42 @@
     <script src="index.js"></script>
   </head>
   <body>
-    <div class="title">
-      <h2>Welcome to</h2>
-      <h1>Patrick's</h1>
-      <h2>Official Homepage</h2>
+    <div id="app">
+      <div class="title">
+        <h2>Welcome to</h2>
+        <h1>Patrick's</h1>
+        <h2>Official Homepage</h2>
+      </div>
+      <hr>
+      <div class="visits">
+        <p>Your visitor #<span class="count"></span></p>
+        <p>since <span class="date"></span></p>
+      </div>
+      <hr>
+      <div class="table-container">
+        <table class="contents">
+          <tr>
+            <td>
+              hello
+            </td>
+            <td>
+              <img src="swayze.jpg" alt="Patrick">
+            </td>
+            <td>
+              !!!
+            </td>
+          </tr>
+        </table>
+      </div>
+      <p>Webmaster: Patrick</p>
+      <p>&copy; {{companyName}}</p>
+      <p>Last Updated: <span class="last-updated"></span></p>
+      <p>The design of this homepage is best enhanced by using Netscape<</p>
     </div>
-    <hr>
-    <div class="visits">
-      <p>Your visitor #<span class="count"></span></p>
-      <p>since <span class="date"></span></p>
-    </div>
-    <hr>
-    <div class="table-container">
-      <table class="contents">
-        <tr>
-          <td>
-            hello
-          </td>
-          <td>
-            <img src="swayze.jpg" alt="Patrick">
-          </td>
-          <td>
-            !!!
-          </td>
-        </tr>
-      </table>
-    </div>
-    <p>Webmaster: Patrick</p>
-    <p>&copy; Patrick Web Design Inc.</p>
-    <p>Last Updated: <span class="last-updated"></span></p>
-    <p>The design of this homepage is best enhanced by using Netscape<</p>
-  </body
+  </body>
+  <script src="https://unpkg.com/vue"></script>
+  <script>
+      const app = new Vue({ el: '#app', data: { companyName: 'Patrick Web Design Inc.' } });
+  </script>
 </html>
  
