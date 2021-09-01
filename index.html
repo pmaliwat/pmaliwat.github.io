@@ -5,6 +5,8 @@
     <title>Welcome to Patrick's Official Webpage</title>
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="styles.css">
+
+    <script src="vue.js"></script>
     <script src="index.js"></script>
   </head>
   <body>
@@ -24,26 +26,35 @@
         <table class="contents">
           <tr>
             <td>
-              hello
+              Biography
             </td>
             <td>
-              <img src="swayze.jpg" alt="Patrick">
+              <img src="under-construction.gif" alt="Under Construction">
             </td>
             <td>
-              !!!
+              Pictures
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Newsletter
+            </td>
+            <td>
+              Links
+            </td>
+            <td>
+              Mailing List
             </td>
           </tr>
         </table>
       </div>
+      <hr>
       <p>Webmaster: Patrick</p>
-      <p>&copy; {{companyName}}</p>
+      <p>&copy; Patrick Web Design Inc.</p>
       <p>Last Updated: <span class="last-updated"></span></p>
       <p>The design of this homepage is best enhanced by using Netscape<</p>
+      <hr>
     </div>
   </body>
-  <script src="vue.js"></script>
-  <script>
-      const app = new Vue({ el: '#app', data: { companyName: 'Patrick Web Design Inc.' } });
-  </script>
 </html>
  
