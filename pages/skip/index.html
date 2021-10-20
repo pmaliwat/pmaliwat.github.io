@@ -1,8 +1,29 @@
 <html>
     <head>
         <script src="../../vue.js"></script>
+        <script src="skip.js"></script>
+        <link rel="stylesheet" href="skip.css">
     </head>
     <body>
-        <h3>SKIP!</h3>
+        <div id="skip-container">
+            <button v-on:click="togglePause">{{startButtonLabel}}</button>
+            <h3>{{exerciseLabel}}</h3>
+            <p>{{countdownLabel}}</p>
+            <div v-if="routineStarted">
+                <p>{{nextExerciseLabel}}</p>
+                
+                <button v-if="isPaused" v-on:click="restartExercise">Restart Exercise</button>
+
+                <div class="progress-bar">
+                    <div class="progress" :style=progressBarStyle></div>
+                </div>
+            </div>
+            <div class="dev-panel">
+                <p class="exercises">
+                    {{routine}}
+                </p>
+            </div>
+            <button v-on:click="showRoutine">Show Routine</button>
+        </div>
     </body>
 </html>
