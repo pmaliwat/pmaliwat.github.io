@@ -18,12 +18,12 @@
                     <div class="progress" :style=progressBarStyle></div>
                 </div>
             </div>
-            <div class="dev-panel">
+            <div v-if="showDevPanel">
                 <p class="exercises">
                     {{routine}}
                 </p>
             </div>
-            <button v-on:click="showRoutine">Show Routine</button>
+            <button v-on:click="toggleDevPanel">Toggle Dev Panel</button>
         </div>
     </body>
 </html>

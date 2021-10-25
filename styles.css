@@ -57,3 +57,7 @@ table.contents td {
 .last-updated {
   color: lightblue;
 }
+
+.hidden {
+  display: none;
+}

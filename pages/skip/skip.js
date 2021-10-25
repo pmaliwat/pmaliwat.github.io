@@ -64,6 +64,7 @@ let data = {
     isPaused: true,
     routineStarted: false,
     progressTime: 0,
+    showDevPanel: false
 };
 
 
@@ -79,7 +80,6 @@ window.onload = function() {
                 return 'Up Next: ' + (this.routine[this.exerciseIndex+1] ? this.routine[this.exerciseIndex+1][0] : 'Last exercise!');
             },
             progressBarStyle: function() {
-                debugger;
                 if (!this.routine || this.routine.length < 1) {
                     return 0;
                 }
@@ -87,7 +87,6 @@ window.onload = function() {
                 let progressPct = getRoutineProgressTime(this.exerciseIndex, this.routine) / getTotalRoutineTime(this.routine);
                 
                 return "width: " + (progressPct * 100) + '%';
-
             }
         },
         watch: {
@@ -118,8 +117,8 @@ window.onload = function() {
                     }
                 }
             },
-            showRoutine: function() {
-                console.log('show routine clicked');
+            toggleDevPanel: function() {
+                this.showDevPanel = !this.showDevPanel
             }
         }
     });
