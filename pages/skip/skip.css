@@ -1,9 +1,51 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: sans-serif;
+}
+
+.skip-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 50%;
+}
+
+.start-restart-btn-container {
+    display: flex;
+}
+
+.start-btn {
+    flex-grow: 1;
+}
+
+.restart-exercise-btn {
+    flex-grow: 1;
+}
+
+.exercise-label {
+    font-size: 50px;
+    margin-top: 20px;
+    text-transform: uppercase;
+}
+
+.countdown-label {
+    font-size: 75px;
+    margin-top: 20px;
+}
+
+.next-exercise-label {
+    color: #777;
+    margin-top: 20px;
+    text-transform: uppercase;
+}
+
 .progress-bar {
-    background-color: white;
-    border: 1px solid black;
+    background-color: #AAA;
+    border: 1px solid white;
     height: 25px;
     margin: 25px 0;
-    width: 50%;
+    width: 100%;
 }
 
 .progress-bar .progress {

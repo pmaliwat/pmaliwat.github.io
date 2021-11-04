@@ -7,8 +7,13 @@ x start button
 x pausing
 x preview/count up to next exercise
 x restart exercise
+x beeps for last few seconds
+x countdown to start (so routine doesn't start immediately)
+- warmup
 - progress bar
-- beeps for last few seconds
+- responsive design
+- cacheing routine (in case something messes up)
+- fast forward/rewind
 - translations
 - better UX
     - buttons are icons
@@ -16,40 +21,16 @@ x restart exercise
     - regenerate routine
     - hide/display labels
 - full exercise list panel
+    - highlight current exercise
+    - selectable
 - countdown verification to real time
 - background images
 - background music
 
+BUGS
+- restart exercise button shouldn't auto start the repeated exercise, it should pause until you hit continue
+- replaying during beepy time, the audio doesn't line up
 */
-
-const SKIP_MODIFIERS = [
-    'doubles',
-    'crosses',
-    'run in place',
-    'mummy kicks'
-];
-
-const ALTERNATE_EXERCISES = [
-    'air squats',
-    'high knees',
-    'jumping lunges',
-    'hand over hand pushups',
-    'rear knee lunge + knee drive',
-    'pushups',
-    'shoulder taps',
-    'swimmers',
-    'narrow pushups',
-    'mountain climbers',
-    'toe touches (abs)',
-    'high knees',
-];
-
-const REST_TIME_SECS = 3; // 10
-const SKIP_TIME_SECS = 5; // 30
-const ALT_EXC_TIME_SECS = 5; // 30
-const FULL_REST_TIME_SECS = 5; // 30
-
-let alternateExercises = [...ALTERNATE_EXERCISES]; // clone!
 
 let countdownTimeout;
 let totalRoutineTime = 0;
@@ -64,13 +45,16 @@ let data = {
     isPaused: true,
     routineStarted: false,
     progressTime: 0,
-    showDevPanel: false
+    showDevPanel: false,
+    isBeepyTime: false,
 };
+
+let routine = new RoutineGenerator({foo: 'bar'});
 
 
 window.onload = function() {
     app = new Vue({ 
-        el: '#skip-container', 
+        el: '#vue-skip-container', 
         data: data,
         computed: {
             startButtonLabel: function() {
@@ -84,13 +68,14 @@ window.onload = function() {
                     return 0;
                 }
 
-                let progressPct = getRoutineProgressTime(this.exerciseIndex, this.routine) / getTotalRoutineTime(this.routine);
+                let progressPct = getRoutineProgressTime(this.exerciseIndex, this.routine) / routine.totalRoutineTime;
                 
                 return "width: " + (progressPct * 100) + '%';
             }
         },
         watch: {
-            exerciseIndex: _watchExerciseIndex
+            exerciseIndex: _watchExerciseIndex,
+            isPaused: _watchIsPaused
         },
         methods: {
             restartExercise: function() {
@@ -133,8 +118,28 @@ function _watchExerciseIndex() {
     beginExercise();
 }
 
+/**
+ * Called when data.isPaused changes.  Begins the next exercise.
+ */
+ function _watchIsPaused(currentlyPaused, prev) {
+    let audioEl = document.getElementsByTagName('audio');
+    if (currentlyPaused) {
+        if (audioEl && audioEl[0]) {
+            audioEl[0].pause();
+        }
+    } else {
+        if (data.isBeepyTime) {
+            if (audioEl && audioEl[0]) {
+                audioEl[0].play();
+            }
+        }
+    }
+
+}
+
 function initialize() {
-    data.routine = createRoutine();
+    data.routine = routine.createRoutine();
+    data.routine.unshift(['Exercise begins in...', 5])
 }
 
 function beginExercise() {
@@ -154,11 +159,20 @@ function countDown() {
     countdownTimeout = window.setTimeout(function() {
         data.timer--;
 
+        if (data.timer === 4) {
+            let audioEl = document.getElementsByTagName('audio');
+            if (audioEl && audioEl[0]) {
+                audioEl[0].play();
+                data.isBeepyTime = true;
+            }
+        }
+
         if (data.timer >= 1) {
             countDown();
         } else {
             data.timer = 0;
             console.log('timer complete: ', data.timer);
+            data.isBeepyTime = false;
         }
         updateCountdownLabels();
     }, 1000);
@@ -168,79 +182,17 @@ function updateCountdownLabels() {
     if (data.timer === 0) {
         proceedToNextExercise();
         data.countdownLabel = `COMPLETE!`
-    } else if (data.timer <=3) {
-        data.countdownLabel = `${data.timer} secs left!`
     } else {
-        data.countdownLabel = `${data.timer} secs`;
+        data.countdownLabel = `${data.timer}s`;
     }
-}
-
-function recalculateProgress() {
-
 }
 
 function proceedToNextExercise() {
     data.exerciseIndex++;
 }
 
-function getRandomAltExercise() {
-    let idx = getRandomInt(alternateExercises.length);
-    let altExercise = alternateExercises[idx];
-    alternateExercises.splice(idx, 1);
-    return altExercise;
-}
-
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
-}
-
-/**
- * Set includes: 30s skip, 10s rest, 30s alt exercise, 10 rest, 30s skip, 10s rest (2mins)
- * Repeat set 3x (6min)
- */
- function createSet() {
-    let set = [];
-
-    set.push(
-        ['skip', SKIP_TIME_SECS], 
-        ['rest', REST_TIME_SECS],
-        [getRandomAltExercise(), ALT_EXC_TIME_SECS],
-        ['rest', REST_TIME_SECS],
-        ['skip', SKIP_TIME_SECS],
-        ['rest', REST_TIME_SECS],
-    );
-    return set;
-}
-
-/**
- * Routine includes 3-4 sets (6 mins x 3 to 4 sets = 18 to 24 mins)
- * @returns 
- */
-function createRoutine() {
-    let fullRest = ['full rest', FULL_REST_TIME_SECS]
-    let completeRoutine = [];
-
-    completeRoutine.push(
-        ...createSet(),
-        ...createSet(),
-        ...createSet(), 
-        fullRest,
-        ...createSet(),
-        ...createSet(),
-        ...createSet(), 
-        fullRest,
-        ...createSet(),
-        ...createSet(),
-        ...createSet(),
-        fullRest,
-        ...createSet(),
-        ...createSet(),
-        ...createSet(), 
-    );
-
-    getTotalRoutineTime(completeRoutine);
-
-    return completeRoutine;
 }
 
 function getRoutineProgressTime(exerciseIndex, routine) {
@@ -250,20 +202,6 @@ function getRoutineProgressTime(exerciseIndex, routine) {
     }
 
     return progressTime;
-}
-
-function getTotalRoutineTime(routine) {
-    if (totalRoutineTime > 0) {
-        return totalRoutineTime;
-    }
-
-    let time = 0;
-    for (let i=0; i < routine.length; i++) {
-        time += routine[i][1];
-    }
-
-    totalRoutineTime = time;
-    return totalRoutineTime;
 }
 
 /*

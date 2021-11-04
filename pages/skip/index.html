@@ -1,19 +1,26 @@
 <html>
     <head>
         <script src="../../vue.js"></script>
+        <script src="routineGenerator.js"></script>
         <script src="skip.js"></script>
+        <link rel="stylesheet" href="reset.css">
         <link rel="stylesheet" href="skip.css">
     </head>
     <body>
-        <div id="skip-container">
-            <button v-on:click="togglePause">{{startButtonLabel}}</button>
-            <h3>{{exerciseLabel}}</h3>
-            <p>{{countdownLabel}}</p>
-            <div v-if="routineStarted">
-                <p>{{nextExerciseLabel}}</p>
-                
-                <button v-if="isPaused" v-on:click="restartExercise">Restart Exercise</button>
+        <div id="vue-skip-container" class="skip-container">
+            <audio>
+                <source src="countdown.wav" type="audio/wav">
+            </audio>
+            <div class="start-restart-btn-container">
+                <button class="start-btn" v-on:click="togglePause">{{startButtonLabel}}</button>
+                <button  v-if="routineStarted" class="restart-exercise-btn" v-if="isPaused" v-on:click="restartExercise">Restart Exercise</button>
 
+            </div>
+
+            <h3 class="exercise-label">{{exerciseLabel}}</h3>
+            <p class="countdown-label">{{countdownLabel}}</p>
+            <div v-if="routineStarted">
+                <p class="next-exercise-label">{{nextExerciseLabel}}</p>
                 <div class="progress-bar">
                     <div class="progress" :style=progressBarStyle></div>
                 </div>
