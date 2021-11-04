@@ -13,6 +13,8 @@ body {
 
 .start-restart-btn-container {
     display: flex;
+    height: 50px;
+    margin-top: 25px;
 }
 
 .start-btn {

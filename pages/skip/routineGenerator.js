@@ -21,15 +21,15 @@ const ALTERNATE_EXERCISES = [
 ];
 
 // ORIGINAL TIMES
-// const REST_TIME_SECS = 10;
-// const SKIP_TIME_SECS = 30;
-// const ALT_EXC_TIME_SECS = 30;
-// const FULL_REST_TIME_SECS = 30;
+const REST_TIME_SECS = 10;
+const SKIP_TIME_SECS = 30;
+const ALT_EXC_TIME_SECS = 30;
+const FULL_REST_TIME_SECS = 30;
 
-const REST_TIME_SECS = 13;
-const SKIP_TIME_SECS = 15;
-const ALT_EXC_TIME_SECS = 15;
-const FULL_XREST_TIME_SECS = 15;
+// const REST_TIME_SECS = 13;
+// const SKIP_TIME_SECS = 15;
+// const ALT_EXC_TIME_SECS = 15;
+// const FULL_REST_TIME_SECS = 15;
 
 class RoutineGenerator {
     #completeRoutine = [];
@@ -52,7 +52,7 @@ class RoutineGenerator {
     createRoutine() {
         console.log('CREATED ROUTINE!');
 
-        let fullRest = ['full rest', FULL_XREST_TIME_SECS]
+        let fullRest = ['full rest', FULL_REST_TIME_SECS]
         let completeRoutine = [];
 
         // TODO: should be a for-loop given the config of how many rounds
